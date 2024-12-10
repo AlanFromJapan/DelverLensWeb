@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Poke-Trainer - {% block pagename %} {% endblock %}</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <script type="text/javascript" src="js/utils.js"></script>
+  </head>
+<body>
+
+<table class="header">
+  <tr>
+    <td><a href="home">Home</a></td>
+
+{% for c in headerz %}
+    {% autoescape false %}
+    {{ c }}
+    {% endautoescape %}  
+{% endfor %}
+    
+    <td>
+      <button type="button" onClick="showSettings();">Settings</button>
+
+    </td>
+  </tr>
+</table>
+<br/>
+<br/>
+<div id="divSettings" style="width:400px; display: none;margin-left:auto; margin-right:0;">
+
+  <table>
+    <tr>
+      <td>Language:</td>
+      <td id="tdLanguage">
+        <button type="button" onClick="switchLanguage('fr');">🇫🇷 Francais</button>
+        <button type="button" onClick="switchLanguage('ja');">🇯🇵 Japonais</button><br/>      
+      </td>
+    </tr>
+    <tr>
+      <td>Letter Style:</td>
+      <td id="tdLetterStyle">  
+        <button type="button" onClick="switchLetterStyle('block');">CAPITALES</button>
+        <button type="button" onClick="switchLetterStyle('cursive');" class="cursive">Caligraphie</button>
+        <button type="button" onClick="switchLetterStyle('mix');">Mix</button><br/>
+      </td>
+    </tr>
+    <tr>
+      <td>Letter Case:</td>
+      <td id="tdLetterCase">
+        <button type="button" onClick="switchLetterCase('uppercase');">🔠 MAJUSCULES</button>
+        <button type="button" onClick="switchLetterCase('lowercase');">🔡 minuscules</button>      
+      </td>
+    </tr>
+  </table>
+
+
+
+
+</div>
+
+{% block contents %} {% endblock %}
+
+<script lang="javascript">
+  //Some JS to execute after the page is loaded?
+  {% autoescape false %}
+    {{ jscontent }}
+  {% endautoescape %}  
+  
+  function showSettings() {
+    var div = document.getElementById('divSettings');
+    if (div.style.display == 'block') {
+      div.style.display = 'none';
+      return;
+    }
+    document.getElementById('divSettings').style.display = 'block';
+  }
+</script>
+  
+</body>

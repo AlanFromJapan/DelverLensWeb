@@ -1,0 +1,24 @@
+{% extends 'master01.html' %}
+
+{% block pagename %} Homepage {% endblock %}
+
+{% block contents %} 
+<span class="homewelcome">Welcome to Poke-Trainer</span><br/>
+By AlanFromJapan / MIT license / Full source code here <a href="https://github.com/AlanFromJapan/poke-trainer">on Github</a>.<br/>
+This application is not approved nor affiliated with Pokemon or Nintendo or anyone.<br/>
+Don't sue me, go play Pokemon instead.<br/>
+This app couldn't exist without <b><a href="https://pokeapi.co/">PokeAPI</a> ❤️</b>!
+<br/>
+<img src="{{logo}}" />
+
+<table class="gameslist">
+    <tr>
+{% for c in gamecards %}
+    {% autoescape false %}
+    {{ c }}
+    {% endautoescape %}  
+{% endfor %}
+    </tr>
+</table>
+{{ dbg }}
+{% endblock %}

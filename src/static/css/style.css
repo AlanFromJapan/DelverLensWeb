@@ -1,0 +1,238 @@
+/* Free fonts from https://www.1001freefonts.com/ */
+@font-face {
+    font-family: "xmas";
+    src: url("/fonts/Christmas Time Personal Use.ttf");
+}
+@font-face {
+    font-family: "janda";
+    src: url("/fonts/JandaAsLongAsYouLoveMe.ttf");
+}
+@font-face {
+    font-family: "rouge";
+    src: url("/fonts/RougeScript-Regular.ttf");
+}
+
+*.cursive {
+    font-family: "janda";
+    text-transform: lowercase;
+}
+*.block {
+    /* default is fine */
+}
+
+*.lowercase {
+    text-transform: lowercase;
+}
+*.uppercase {
+    text-transform: uppercase;    
+}
+/*--------------------------------------------------------------------------------------------------------*/
+
+body {
+    background-color: black;
+    color: gainsboro;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+/*--------------------------------------------------------------------------------------------------------*/
+/* Header */
+table.header{
+    width: 100%;
+    text-align: center;
+    height: 30px;
+    vertical-align: middle;
+}
+
+table.header tr td {
+    width:16%;
+}   
+
+/*--------------------------------------------------------------------------------------------------------*/
+/* Anchors */
+a {color:gainsboro; border-bottom: 1px dotted gold;}
+a:link {text-decoration: none;}
+a:active {font-weight: bold;}
+a:visited {color:gainsboro;}
+a:hover {
+    color:gold;
+    text-decoration: underline;
+}
+
+a.next:before{
+    content:"🔥 "
+}
+a.next:after{
+    content:" 🔥"
+}
+a.next{
+    padding: 20px;
+    background-color:seagreen;
+    text-align: center;
+}
+/*--------------------------------------------------------------------------------------------------------*/
+/* Found the glow effect here https://www.proglobalbusinesssolutions.com/css-hover-effects/ */
+table.header a {
+    color:gainsboro;    
+    transition: .5s; 
+    border-radius: 50%;
+    border-bottom: none;
+    font-weight: bold;
+}
+table.header a:before{  
+    background: gold;
+    transition: .5s;
+    transform: scale(.9);
+    z-index: -1;
+
+    border-radius: 50%;
+}
+table.header a:hover::before {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px gold;
+    }
+table.header a:hover {
+    color: gold;
+    box-shadow: 0 0 5px gold;
+    text-shadow: 0 0 5px gold;
+}
+
+
+/*--------------------------------------------------------------------------------------------------------*/
+/* Homepage */
+
+span.homewelcome{
+    font-weight: bold;
+    font-size: xx-large;
+    color: goldenrod;
+}
+table.gameslist tr td{
+    border: solid 2px goldenrod;
+    height: 200px;
+    width: 200px;
+    vertical-align: top;
+    padding: 10px;
+}
+
+.gamename {
+    font-weight: bold;
+    font-size: larger;
+    color: goldenrod;
+}
+
+/*--------------------------------------------------------------------------------------------------------*/
+/* GameA : Initiale */
+/* Good doc about alignment https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Aligning_Items_in_a_Flex_Container */
+div.game_list {
+    display: inline-flex;
+    width: 90%;
+    flex-direction: row;
+    justify-content: space-between;
+
+    text-align: center;
+    padding-left: 5%;
+}
+div.gameA_card {
+    width: 15%;
+    height: 200px;
+    background-color: gainsboro;
+    cursor: pointer;
+    
+}
+div.gameA_card > div.letter {
+    color: black;
+    font-size: 56px;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+    
+    transform: translateY(50%);
+    margin: 0px;
+}
+
+.game_img {
+    width:100%;
+    text-align: center;
+}
+.game_result  {
+    width:100%;
+    text-align: center;
+    font-size: larger;
+}
+.game_pokemon_name  {
+    font-weight: bolder;
+    font-size: larger;
+    color: goldenrod;
+}
+.game_score {
+    border: 2px double goldenrod;
+    width: 100px;
+    height: 150px;
+    color: goldenrod;
+    background-color: MidnightBlue;
+    text-align: center;
+    font-weight: bold;
+    position: fixed;
+    right: 5%;
+}
+.game_score_val {
+    font-size: 300%;
+    font-weight: bolder;
+}
+
+/*--------------------------------------------------------------------------------------------------------*/
+/* GameB : Pendu */
+div.pendu_list {
+    display: inline-flex;
+    width: 50%;
+    flex-direction: row;
+    justify-content: space-between;
+
+    text-align: center;
+}
+div.pendu_card {
+    width: 15%;
+    min-width: 30px;
+    max-width: 50px;
+    height: 50px;
+    background-color: dimgray;
+    cursor: not-allowed;
+    
+}
+div.pendu_card > div.letter {
+    color: black;
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+    color:whitesmoke;
+    margin: 0px;
+}
+
+table.halfhalf {
+    border: 0px;
+}
+table.halfhalf tr td {
+    width:50%;
+    text-align: center;
+}
+#pendu {
+    color: white;
+    background-color: darkslategrey;
+}
+
+div.pendu_input {
+    background-color: darkgoldenrod;
+    border: 1px solid white;
+}
+#pendu_failed{
+    color:slategrey;
+    text-decoration:line-through;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* ----------------------------- Listening -------------------------------------- */
+button.replaySound {
+    width: 200px;
+    height: 200px;
+}
