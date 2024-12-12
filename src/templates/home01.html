@@ -13,9 +13,9 @@ This app couldn't exist without <b><a href="https://pokeapi.co/">PokeAPI</a> ❤
 
 <table class="gameslist">
     <tr>
-{% for c in gamecards %}
+{% for c in imgs %}
     {% autoescape false %}
-    {{ c }}
+    <img src="{{ c }}" />
     {% endautoescape %}  
 {% endfor %}
     </tr>

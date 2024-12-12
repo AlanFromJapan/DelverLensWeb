@@ -9,8 +9,10 @@ __EXPORTED_DB_FILTER = "_exported.dlens"
 __EXPORTS = []
 
 #Initiate the database utility
-def init(db_file):
-    pass
+def init(db_file=None):
+    global __EXPORTS
+    setMasterDB(None)
+    __EXPORTS = findExportedDBs()
 
 
 #finds ONE master database in the input/ folder
@@ -142,4 +144,4 @@ if __name__ == '__main__':
         for i in range(10):
             if i >= len(collection.card_ids):
                 break
-            print(f"{collection.card_ids[i]} => { all_cards[collection.card_ids[i]] } ")
+            print(f"{collection.card_ids[i]} => { all_cards[collection.card_ids[i]] } { all_cards[collection.card_ids[i]].scryfall_id } ")

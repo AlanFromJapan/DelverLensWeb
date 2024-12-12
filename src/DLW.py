@@ -10,7 +10,7 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 
 from config import myconfig
 import dbutils
-
+import scryfall
 
 ########################################################################################
 ## Flask vars
@@ -63,7 +63,22 @@ def text_to_speech(lang, message):
 @app.route('/')
 @app.route('/home')
 def homepage():
-    return render_template("home01.html", pagename="Home",  **current_app.global_render_template_params)
+    imgs = []
+
+    all_cards = dbutils.getAllCards()
+
+    all_collections = dbutils.getAllCollections()
+
+    if len(all_collections) > 0:
+        collection = dbutils.getCollectionCards(all_collections[0])
+        for i in range(10):
+            if i >= len(collection.card_ids):
+                break
+            card = all_cards[collection.card_ids[i]]
+            card.image = scryfall.getImageURLFromScryfallID(card.scryfall_id, "normal")
+            imgs.append(all_cards[collection.card_ids[i]].image)
+
+    return render_template("home01.html", pagename="Home", imgs=imgs, **current_app.global_render_template_params)
 
 
 @app.before_request
@@ -90,7 +105,7 @@ if __name__ == '__main__':
         app.logger.warning("Starting the app")
 
         #init the database
-        dbutils.init(myconfig["database"])
+        dbutils.init()
 
         #start web interface
         app.debug = True
