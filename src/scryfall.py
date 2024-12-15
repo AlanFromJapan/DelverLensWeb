@@ -8,11 +8,13 @@ import requests
 import json
 import time
 import logging
+import functools
 
 cache_ArenaID2ImageURL = {}
 BLANK_TILE = "Nothing"
 
 #return the URI from a Scryfall ID of a card and in a supported size by scryfall
+@functools.lru_cache(maxsize=2048)
 def getImageURLFromScryfallID (scryfall_id, size):
     global cache_ArenaID2ImageURL
 
