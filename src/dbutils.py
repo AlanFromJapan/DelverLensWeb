@@ -1,12 +1,22 @@
 import sqlite3
 import os
 from  delverObjects import Collection, Card
+import logging
 
 __MASTER_DB_FILTER = "_backup.dlens"
 __MASTER = ""
 
 __EXPORTED_DB_FILTER = "_exported.dlens"
 __EXPORTS = []
+
+__ALL_CARDS = {}
+
+#attribute all_cards, more elegant
+def __getattr__(name):
+    if name == 'all_cards':
+        return getAllCards()
+    raise AttributeError(f"module '{__name__}' has no attribute '{name}'")
+
 
 #Initiate the database utility
 def init(db_file=None):
@@ -45,25 +55,40 @@ def setMasterDB(master: None):
 
 #returns ALL the cards in the master database
 def getAllCards():
+    global __MASTER, __ALL_CARDS
     if not __MASTER:
         raise ValueError("Master database is not set.")
+
+    if __ALL_CARDS:
+        return __ALL_CARDS
+    
+    logging.info("getAllCards() - Loading all cards from the master database")
 
     conn = sqlite3.connect(__MASTER)
 
     try:
         cursor = conn.cursor()
         
-        cursor.execute("SELECT names._id, names.name, names.mana, names.type, names.rules, names.rulings, cards.scryfall_id FROM data_names as names join data_cards as cards ON names._id = cards._id")
+        #beware: table data_cards joins to [data_names._id] on the [data_cards.name] field NOT [data_cards._id] because of ALTERNATE versions of the card
+        #so group by to get 1 answer per card, Min(scryfall_id) to get the first scryfall_id found
+        cursor.execute("""
+SELECT 
+    names._id, names.name, names.mana, names.type, names.rules, names.rulings, MIN(cards.scryfall_id) as scryfall_id  
+FROM 
+    data_names as names join data_cards as cards ON names._id = cards.name
+GROUP BY 
+    names._id, names.name, names.mana, names.type, names.rules, names.rulings
+                       """)
         rows = cursor.fetchall()
     finally:    
         conn.close()
     
-    cards = {}
+    __ALL_CARDS = {}
     for row in rows:
         c = Card(id = int(row[0]), name=row[1], mana=row[2], type=row[3], description=row[4], ruling=row[5], scryfall_id= row[6])
-        cards[c.id] = c
+        __ALL_CARDS[c.id] = c
     
-    return cards
+    return __ALL_CARDS
     
 
 #updates a collection ALL the cards IDs from the exported databases
@@ -123,10 +148,10 @@ if __name__ == '__main__':
     __EXPORTS = findExportedDBs()
     print("exported DBs: %s" % __EXPORTS)
 
-    all_cards = getAllCards()
-    print("All cards: %d" % len(all_cards))
+    getAllCards()
+    print("All cards: %d" % len(getAllCards()))
     print("First 10 cards:")
-    for i, card in enumerate(all_cards.values()):
+    for i, card in enumerate(getAllCards().values()):
         if i >= 10:
             break
         print(card)
@@ -144,4 +169,4 @@ if __name__ == '__main__':
         for i in range(10):
             if i >= len(collection.card_ids):
                 break
-            print(f"{collection.card_ids[i]} => { all_cards[collection.card_ids[i]] } { all_cards[collection.card_ids[i]].scryfall_id } ")
+            print(f"{collection.card_ids[i]} => { getAllCards()[collection.card_ids[i]] } { getAllCards()[collection.card_ids[i]].scryfall_id } ")

@@ -63,10 +63,9 @@ def text_to_speech(lang, message):
 @app.route('/')
 @app.route('/home')
 def homepage():
-    imgs = []
+    cards = []
 
-    all_cards = dbutils.getAllCards()
-
+    
     all_collections = dbutils.getAllCollections()
 
     if len(all_collections) > 0:
@@ -74,11 +73,11 @@ def homepage():
         for i in range(10):
             if i >= len(collection.card_ids):
                 break
-            card = all_cards[collection.card_ids[i]]
+            card = dbutils.all_cards[collection.card_ids[i]]
             card.image = scryfall.getImageURLFromScryfallID(card.scryfall_id, "normal")
-            imgs.append(all_cards[collection.card_ids[i]].image)
+            cards.append(dbutils.all_cards[collection.card_ids[i]])
 
-    return render_template("home01.html", pagename="Home", imgs=imgs, **current_app.global_render_template_params)
+    return render_template("home01.html", pagename="Home", imgs=cards, **current_app.global_render_template_params)
 
 
 @app.before_request

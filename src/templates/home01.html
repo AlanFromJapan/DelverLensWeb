@@ -3,11 +3,11 @@
 {% block pagename %} Homepage {% endblock %}
 
 {% block contents %} 
-<span class="homewelcome">Welcome to Poke-Trainer</span><br/>
-By AlanFromJapan / MIT license / Full source code here <a href="https://github.com/AlanFromJapan/poke-trainer">on Github</a>.<br/>
-This application is not approved nor affiliated with Pokemon or Nintendo or anyone.<br/>
-Don't sue me, go play Pokemon instead.<br/>
-This app couldn't exist without <b><a href="https://pokeapi.co/">PokeAPI</a> ❤️</b>!
+<span class="homewelcome">Welcome to DelverLensWeb</span><br/>
+By AlanFromJapan / MIT license / Full source code here <a href="https://github.com/AlanFromJapan/DelverLensWeb">on Github</a>.<br/>
+This application is not approved nor affiliated with DelverLens, Magic The Gathering, Hasbro, or Nintendo or anyone.<br/>
+Don't sue me, go play MtG instead.<br/>
+This app couldn't exist without <b><a href="https://scryfall.com/">Scryfall</a> ❤️</b>!
 <br/>
 <img src="{{logo}}" />
 
@@ -15,7 +15,11 @@ This app couldn't exist without <b><a href="https://pokeapi.co/">PokeAPI</a> ❤
     <tr>
 {% for c in imgs %}
     {% autoescape false %}
-    <img src="{{ c }}" />
+    <table style="border: solid 2px red;">
+        <tr><td>{{ c.name }}</td></tr>
+        <tr><td><img src="{{ c.image }}" /></td></tr>
+    </table>
+    
     {% endautoescape %}  
 {% endfor %}
     </tr>
